@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>xto100x × UVIE — LinkedIn Audit & Design Comparison</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── UVIE BRAND PALETTE ── */
+    :root {
+      --navy:    #003d99;
+      --blue:    #1565c0;
+      --sky:     #29abe2;
+      --green:   #3ab54a;
+      --orange:  #f15a24;
+      --yellow:  #fdb913;
+      --red:     #e53935;
+      --bg:      #f0f6ff;
+      --bg2:     #e4f0fb;
+      --surface: #ffffff;
+      --border:  #ccddf5;
+      --text:    #0a1a3a;
+      --mid:     #344f72;
+      --light:   #6688aa;
+      --font:    'Poppins', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ════════════════════════════════
+       INTRO OVERLAY
+    ════════════════════════════════ */
+    #intro {
+      position: fixed; inset: 0;
+      background: #fff;
+      z-index: 9999;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: opacity 0.55s ease, visibility 0.55s ease;
+      padding: 24px;
+      text-align: center;
+    }
+    #intro.out { opacity: 0; visibility: hidden; pointer-events: none; }
+    .i-logo { animation: logoPop 0.75s cubic-bezier(.34,1.56,.64,1) 0.2s both; }
+    .i-logo img { width: min(200px, 55vw); }
+    @keyframes logoPop {
+      from { opacity: 0; transform: scale(0.3) rotate(-12deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+    .i-company {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--light);
+      animation: fadeUp 0.45s ease 0.85s both;
+    }
+    .i-headline {
+      font-size: clamp(15px, 4vw, 18px); font-weight: 700;
+      color: var(--navy); line-height: 1.4;
+      animation: fadeUp 0.45s ease 1.05s both;
+    }
+    .i-headline span { color: var(--sky); }
+    .i-bar {
+      width: min(180px, 50vw); height: 3px;
+      background: var(--bg2);
+      border-radius: 99px; overflow: hidden;
+      animation: fadeUp 0.4s ease 1.2s both;
+    }
+    .i-fill {
+      height: 100%; border-radius: 99px;
+      background: linear-gradient(90deg, #f15a24, #fdb913, #3ab54a, #29abe2, #003d99);
+      animation: barFill 1.5s ease 1.3s both;
+    }
+    @keyframes barFill { from { width: 0; } to { width: 100%; } }
+    .i-by {
+      font-size: 11.5px; font-weight: 500; color: var(--light);
+      animation: fadeUp 0.4s ease 1.5s both;
+    }
+    .i-by strong { color: var(--navy); font-weight: 700; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ════════════════════════════════
+       TOP NAV
+    ════════════════════════════════ */
+    .nav {
+      background: var(--navy);
+      padding: 0 40px;
+      display: flex; align-items: center;
+      position: sticky; top: 0; z-index: 200;
+      box-shadow: 0 2px 20px rgba(0,20,80,0.35);
+      min-height: 60px;
+    }
+    .nav-logo {
+      display: flex; align-items: center;
+      padding: 10px 0; margin-right: 20px; flex-shrink: 0;
+    }
+    .nav-logo img { height: 34px; filter: brightness(0) invert(1); }
+    .nav-sep { width: 1px; height: 22px; background: rgba(255,255,255,0.25); margin-right: 8px; flex-shrink: 0; }
+    .nb {
+      padding: 18px 16px;
+      font-family: var(--font);
+      font-size: 13.5px; font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      border: none; background: none; cursor: pointer;
+      position: relative; white-space: nowrap;
+      transition: color 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .nb::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 10px; right: 10px;
+      height: 3px;
+      background: var(--yellow);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+      border-radius: 3px 3px 0 0;
+    }
+    .nb.active { color: #fff; }
+    .nb.active::after { transform: scaleX(1); }
+    .nb:hover:not(.active) { color: rgba(255,255,255,0.88); }
+    .nav-end {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      flex-shrink: 0;
+    }
+    .nav-end-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--yellow); opacity: 0.7; flex-shrink: 0;
+    }
+
+    /* ════════════════════════════════
+       PAGES
+    ════════════════════════════════ */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ════════════════════════════════
+       AUDIT HERO
+    ════════════════════════════════ */
+    .a-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 55%, var(--sky) 100%);
+      padding: 52px 48px 0;
+      position: relative; overflow: hidden;
+    }
+    .a-hero::before {
+      content: '';
+      position: absolute; right: 40px; top: -60px;
+      width: 480px; height: 480px;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.055) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .a-pills { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .a-pill {
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.85);
+      padding: 5px 14px; border-radius: 100px;
+      font-size: 10.5px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .a-pill.yellow {
+      background: rgba(253,185,19,0.22);
+      border-color: rgba(253,185,19,0.45);
+      color: var(--yellow);
+    }
+    .a-hero h1 {
+      font-size: clamp(24px, 4vw, 42px);
+      font-weight: 800; color: #fff;
+      line-height: 1.12; letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .a-hero h1 span { color: var(--yellow); }
+    .a-hero-sub {
+      font-size: 14px; color: rgba(255,255,255,0.68);
+      max-width: 600px; line-height: 1.75;
+      margin-bottom: 40px;
+    }
+    .a-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      background: rgba(0,0,0,0.22);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      margin: 0 -48px;
+    }
+    .a-stat {
+      padding: 22px 26px;
+      border-right: 1px solid rgba(255,255,255,0.09);
+    }
+    .a-stat:last-child { border-right: none; }
+    .a-stat .n { font-size: 30px; font-weight: 800; color: #fff; line-height: 1; }
+    .a-stat .n em { color: var(--yellow); font-style: normal; }
+    .a-stat .l {
+      font-size: 10px; font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      margin-top: 4px;
+      text-transform: uppercase; letter-spacing: 0.07em;
+    }
+
+    /* AUDIT BODY */
+    .a-body { max-width: 1060px; margin: 0 auto; padding: 48px 28px 80px; }
+
+    .rainbow-bar {
+      height: 3px;
+      background: linear-gradient(90deg, #f15a24, #fdb913, #3ab54a, #29abe2, #003d99, #7b4fa6);
+      border-radius: 99px;
+      margin-bottom: 40px;
+    }
+
+    /* DIAGNOSIS */
+    .diag {
+      background: #fffdf0;
+      border: 1.5px solid #fdb913;
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex; gap: 16px; align-items: flex-start;
+      margin-bottom: 48px;
+    }
+    .diag-ico { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+    .diag-body {}
+    .diag h3 {
+      font-size: 10px; font-weight: 700;
+      color: #7a5500; text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 8px;
+    }
+    .diag p { font-size: 14px; color: #3a2600; line-height: 1.75; font-weight: 400; }
+    .diag-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    .diag-tag {
+      font-size: 10.5px; font-weight: 600;
+      padding: 3px 11px; border-radius: 6px;
+    }
+    .diag-tag.r { background: #fde8e8; color: #c0392b; }
+    .diag-tag.a { background: #fff5e0; color: #8a5c00; }
+    .diag-tag.g { background: #e4f4e8; color: #1a7020; }
+
+    /* SECTION HEADER */
+    .sh {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px; padding-bottom: 14px;
+      border-bottom: 2px solid var(--border);
+    }
+    .sh-num {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; font-weight: 800; flex-shrink: 0;
+    }
+    .sh-num.r { background: #fde8e8; color: #c0392b; }
+    .sh-num.g { background: #e4f4e8; color: #1d7a2a; }
+    .sh-num.b { background: #e4eefe; color: var(--navy); }
+    .sh-text h2 { font-size: 20px; font-weight: 700; color: var(--navy); }
+    .sh-text p { font-size: 12px; color: var(--light); margin-top: 2px; font-weight: 400; }
+
+    /* ISSUE GRID */
+    .ig { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 48px; }
+    .ic {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 22px;
+      box-shadow: 0 2px 12px rgba(0,61,153,0.05);
+    }
+    .ic.full { grid-column: 1 / -1; }
+    .ic-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+    .ic-ico {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0; margin-top: 1px;
+    }
+    .ic-ico.r { background: #fde8e8; }
+    .ic-ico.a { background: #fff5e0; }
+    .ic h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .ic p { font-size: 13px; color: var(--mid); line-height: 1.7; }
+    .ic ul { padding-left: 18px; margin-top: 4px; }
+    .ic ul li { font-size: 13px; color: var(--mid); line-height: 1.7; margin-bottom: 4px; }
+    .fix {
+      margin-top: 14px; padding-top: 14px;
+      border-top: 1px solid #edf2fb;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .fix-tag {
+      font-size: 9.5px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--green); background: #e4f4e8;
+      padding: 3px 9px; border-radius: 6px;
+      flex-shrink: 0; margin-top: 2px;
+      white-space: nowrap;
+    }
+    .fix p { font-size: 12.5px; color: var(--mid); line-height: 1.65; }
+
+    /* CAPTION FORMULA */
+    .formula-box {
+      background: #f4f8ff;
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 18px;
+      margin-top: 16px;
+    }
+    .formula-box .fb-label {
+      font-size: 9.5px; font-weight: 700; color: var(--light);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .fb-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 6px; }
+    .fb-row:last-child { margin-bottom: 0; }
+    .fb-num {
+      width: 20px; height: 20px; border-radius: 6px;
+      background: var(--navy); color: #fff;
+      font-size: 10px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .fb-text { font-size: 12px; color: var(--mid); line-height: 1.55; }
+    .fb-text strong { color: var(--navy); }
+
+    /* WIN CARDS */
+    .wg { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 48px; }
+    .wc {
+      background: var(--surface);
+      border: 1.5px solid #b6dfc0;
+      border-radius: 16px; padding: 22px 20px 18px;
+      position: relative; overflow: hidden;
+    }
+    .wc::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--green), var(--sky));
+    }
+    .wc .wn-wrap { display: flex; align-items: baseline; gap: 6px; margin-bottom: 10px; }
+    .wc .wn { font-size: 32px; font-weight: 800; color: var(--green); line-height: 1; }
+    .wc .wn-lbl {
+      font-size: 10.5px; font-weight: 700; color: var(--green);
+      text-transform: uppercase; letter-spacing: 0.07em;
+      opacity: 0.75;
+    }
+    .wc h4 { font-size: 13.5px; font-weight: 700; color: var(--navy); margin-bottom: 7px; }
+    .wc p { font-size: 12.5px; color: var(--mid); line-height: 1.65; }
+    .wc .tip {
+      margin-top: 12px; padding-top: 10px;
+      border-top: 1px solid #d4eedd;
+      font-size: 12px; color: #1a7020; font-weight: 600;
+    }
+
+    /* MIX BARS */
+    .mix { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .mix-col h4 {
+      font-size: 11px; font-weight: 700; color: var(--navy);
+      text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 14px;
+    }
+    .mi { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+    .mi-lbl { font-size: 12px; color: var(--mid); flex: 1; min-width: 0; font-weight: 400; }
+    .mi-bar { width: 80px; height: 6px; background: var(--bg2); border-radius: 99px; overflow: hidden; flex-shrink: 0; }
+    .mi-fill { height: 100%; border-radius: 99px; }
+    .mi-pct { font-size: 11.5px; font-weight: 600; color: var(--mid); width: 30px; text-align: right; flex-shrink: 0; }
+
+    /* PLAN */
+    .pg { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 4px; }
+    .pc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+    }
+    .pc-hd {
+      padding: 16px 20px;
+      font-size: 11px; font-weight: 700; color: #fff;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      line-height: 1.4;
+    }
+    .pc-hd.p1 { background: var(--navy); }
+    .pc-hd.p2 { background: #1a7530; }
+    .pc-hd.p3 { background: #c44a00; }
+    .pc-body { padding: 18px 20px; }
+    .pi { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+    .pi:last-child { margin-bottom: 0; }
+    .pid { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+    .pi p { font-size: 12.5px; color: var(--mid); line-height: 1.6; }
+
+    /* TABLE (scrollable wrapper) */
+    .tbl-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 48px; }
+    .tbl {
+      width: 100%; border-collapse: collapse;
+      background: var(--surface);
+      min-width: 540px;
+    }
+    .tbl thead tr { background: var(--navy); color: #fff; }
+    .tbl th {
+      padding: 13px 16px;
+      font-size: 10.5px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      text-align: left; white-space: nowrap;
+    }
+    .tbl td {
+      padding: 12px 16px;
+      font-size: 12.5px; font-weight: 400;
+      border-bottom: 1px solid var(--border);
+    }
+    .tbl tr:last-child td { border-bottom: none; }
+    .tbl tbody tr:hover { background: #f4f8ff; }
+    .tbl tbody tr:nth-child(even) { background: #f8faff; }
+    .tbl tbody tr:nth-child(even):hover { background: #f0f5ff; }
+    .ph { color: var(--green); font-weight: 700; }
+    .pm { color: #c07000; font-weight: 600; }
+    .pl { color: var(--red); font-weight: 600; }
+
+    /* ════════════════════════════════
+       COMPARE HERO
+    ════════════════════════════════ */
+    .c-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 55%, var(--sky) 100%);
+      padding: 52px 48px 44px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .c-hero::before {
+      content: '';
+      position: absolute; left: 50%; top: -80px;
+      transform: translateX(-50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .c-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px; padding: 5px 15px;
+      margin-bottom: 16px;
+      font-size: 10.5px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+    }
+    .c-hero h1 {
+      font-size: clamp(22px, 3.5vw, 40px);
+      font-weight: 800; color: #fff;
+      margin-bottom: 10px; letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .c-hero h1 .yellow { color: var(--yellow); }
+    .c-hero > p {
+      font-size: 14px; color: rgba(255,255,255,0.6);
+      max-width: 520px; margin: 0 auto; line-height: 1.75;
+    }
+    .c-pills {
+      display: flex; justify-content: center;
+      gap: 8px; margin-top: 22px; flex-wrap: wrap;
+    }
+    .cp {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.85);
+      padding: 4px 14px; border-radius: 100px;
+      font-size: 11.5px; font-weight: 500;
+    }
+    .cp.yellow {
+      background: rgba(253,185,19,0.18);
+      border-color: rgba(253,185,19,0.35);
+      color: var(--yellow);
+    }
+
+    /* INNER TABS — horizontally scrollable, no wrap */
+    .itabs {
+      background: var(--surface);
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      box-shadow: 0 2px 8px rgba(0,61,153,0.05);
+    }
+    .itabs::-webkit-scrollbar { display: none; }
+    .itb {
+      padding: 15px 22px;
+      font-family: var(--font);
+      font-size: 13px; font-weight: 600;
+      color: var(--light);
+      border: none; background: none; cursor: pointer;
+      position: relative; white-space: nowrap;
+      transition: color 0.2s;
+      flex-shrink: 0;
+    }
+    .itb::after {
+      content: ''; position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 2px; background: var(--navy);
+      transform: scaleX(0); transition: transform 0.25s;
+    }
+    .itb.active { color: var(--navy); }
+    .itb.active::after { transform: scaleX(1); }
+    .itb:hover:not(.active) { color: var(--blue); }
+
+    /* PANES */
+    .pane { display: none; padding: 48px 28px 72px; max-width: 1100px; margin: 0 auto; }
+    .pane.active { display: block; }
+    .p-intro { text-align: center; margin-bottom: 36px; }
+    .p-intro h2 { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .p-intro p { font-size: 13.5px; color: var(--mid); max-width: 520px; margin: 0 auto; font-weight: 400; line-height: 1.7; }
+
+    /* COMPARE CARD */
+    .cc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px; overflow: hidden;
+      box-shadow: 0 4px 28px rgba(0,61,153,0.08);
+      margin-bottom: 32px;
+    }
+    .cc-hd {
+      background: linear-gradient(90deg, var(--navy), var(--blue));
+      padding: 18px 26px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .cc-num {
+      width: 34px; height: 34px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800; color: #fff;
+      flex-shrink: 0;
+    }
+    .cc-hd-text { min-width: 0; }
+    .cc-hd h3 { font-size: 15px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cc-hd p { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 3px; font-weight: 400; }
+
+    /* two-col grid */
+    .cc-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .cc-orig { padding: 24px; border-right: 1px solid var(--border); background: #f4f8fe; }
+    .cc-ours { padding: 24px; background: var(--surface); }
+
+    .lbl-orig {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #e6edf8; border: 1px solid #c4d8f0;
+      color: #4a6a90; padding: 4px 12px; border-radius: 100px;
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      margin-bottom: 14px;
+    }
+    .lbl-ours {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: linear-gradient(90deg, #e4f4e8, #e4f0fd);
+      border: 1px solid #a8d8b8; color: var(--navy);
+      padding: 4px 12px; border-radius: 100px;
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      margin-bottom: 14px;
+    }
+    .lbl-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .lbl-orig .lbl-dot { background: #8aadd4; }
+    .lbl-ours .lbl-dot { background: var(--green); }
+
+    .badge-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+    .our-star {
+      background: linear-gradient(90deg, var(--yellow), #fdd040);
+      color: var(--navy);
+      font-size: 9.5px; font-weight: 800;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 100px;
+    }
+
+    .img-orig {
+      width: 100%; border-radius: 12px; display: block;
+      border: 1px solid var(--border);
+      opacity: 0.80; filter: saturate(0.82);
+    }
+    .img-ours {
+      width: 100%; border-radius: 13px; display: block;
+      border: 2.5px solid var(--sky);
+      box-shadow: 0 0 0 5px rgba(41,171,226,0.1), 0 10px 36px rgba(0,61,153,0.16);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .img-ours:hover {
+      transform: translateY(-5px) scale(1.012);
+      box-shadow: 0 0 0 7px rgba(41,171,226,0.18), 0 20px 52px rgba(0,61,153,0.2);
+    }
+
+    /* DIFF BAR */
+    .diff-bar {
+      background: linear-gradient(180deg, #f2f7ff, #eef6f3);
+      border-top: 1px solid var(--border);
+      padding: 24px 28px;
+    }
+    .diff-bar h4 {
+      font-size: 10px; font-weight: 700; color: var(--light);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .dg { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .di { display: flex; gap: 10px; align-items: flex-start; }
+    .di-ico {
+      width: 28px; height: 28px;
+      background: var(--green);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .di-ico svg { width: 14px; height: 14px; fill: #fff; }
+    .di strong { font-size: 12.5px; font-weight: 700; color: var(--navy); display: block; margin-bottom: 3px; }
+    .di span { font-size: 11.5px; color: var(--mid); line-height: 1.6; font-weight: 400; }
+
+    /* OVERVIEW TABLE */
+    .ov-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 28px; }
+    .os {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px 18px; text-align: center;
+      border-top: 3px solid var(--navy);
+    }
+    .os .n { font-size: 34px; font-weight: 800; color: var(--navy); line-height: 1; }
+    .os .n em { color: var(--green); font-style: normal; }
+    .os .l { font-size: 11.5px; color: var(--light); margin-top: 4px; font-weight: 500; }
+    .ov-tbl-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); }
+    .ov-tbl {
+      width: 100%; border-collapse: collapse;
+      background: var(--surface); min-width: 500px;
+    }
+    .ov-tbl thead tr { background: var(--navy); color: #fff; }
+    .ov-tbl th { padding: 13px 18px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; text-align: left; white-space: nowrap; }
+    .ov-tbl td { padding: 13px 18px; font-size: 13px; border-bottom: 1px solid var(--border); font-weight: 400; }
+    .ov-tbl tr:last-child td { border-bottom: none; }
+    .ov-tbl tbody tr:nth-child(even) { background: #f6faff; }
+    .tb { background: #e6edf8; color: #3a6090; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; }
+    .ta { background: #e4f4e8; color: #1a7020; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy);
+      text-align: center; padding: 28px 24px;
+      color: rgba(255,255,255,0.38);
+      font-size: 12.5px; font-weight: 400;
+    }
+    footer strong { color: var(--yellow); font-weight: 700; }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .wg { grid-template-columns: 1fr 1fr; }
+      .pg { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 860px) {
+      .a-hero { padding: 40px 24px 0; }
+      .a-stats { grid-template-columns: 1fr 1fr; margin: 0 -24px; }
+      .a-body { padding: 36px 20px 60px; }
+      .c-hero { padding: 40px 24px 36px; }
+      .ig { grid-template-columns: 1fr; }
+      .ic.full { grid-column: auto; }
+      .wg { grid-template-columns: 1fr 1fr; }
+      .mix { grid-template-columns: 1fr; }
+      .pg { grid-template-columns: 1fr; }
+      .cc-grid { grid-template-columns: 1fr; }
+      .cc-orig { border-right: none; border-bottom: 1px solid var(--border); }
+      .ov-stats { grid-template-columns: 1fr 1fr; }
+      .pane { padding: 32px 20px 60px; }
+      .nav { padding: 0 20px; }
+      .nav-end { display: none; }
+      .diff-bar { padding: 20px; }
+    }
+    @media (max-width: 600px) {
+      .a-hero { padding: 32px 16px 0; }
+      .a-stats { margin: 0 -16px; grid-template-columns: 1fr 1fr; }
+      .a-stat { padding: 18px 16px; }
+      .a-stat .n { font-size: 24px; }
+      .a-body { padding: 28px 16px 52px; }
+      .c-hero { padding: 32px 16px 28px; }
+      .pane { padding: 24px 16px 52px; }
+      .wg { grid-template-columns: 1fr; }
+      .ov-stats { grid-template-columns: 1fr; }
+      .a-pills { gap: 6px; }
+      .a-pill { font-size: 10px; padding: 4px 10px; }
+      .nb { padding: 16px 12px; font-size: 12.5px; }
+      .itb { padding: 13px 16px; font-size: 12px; }
+      .cc-hd { padding: 14px 16px; }
+      .cc-hd h3 { font-size: 13.5px; }
+      .cc-orig, .cc-ours { padding: 16px; }
+      .dg { grid-template-columns: 1fr; }
+      .diag { padding: 18px 16px; }
+      .sh-text h2 { font-size: 17px; }
+      .mix-col h4 { font-size: 10px; }
+    }
+    @media (max-width: 400px) {
+      .a-stats { grid-template-columns: 1fr 1fr; }
+      .a-stat .n { font-size: 20px; }
+      .a-stat .l { font-size: 9px; }
+      .nav-logo img { height: 28px; }
+      .nb { font-size: 12px; padding: 16px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div id="intro" onclick="this.classList.add('out')">
+  <div class="i-logo"><img src="uvie-logo.png" alt="ultraVIBRANT" /></div>
+  <div class="i-company">Ultra Vibrant Integrated Energy</div>
+  <div class="i-headline">Your LinkedIn, <span>honestly assessed.</span></div>
+  <div class="i-bar"><div class="i-fill"></div></div>
+  <div class="i-by">Prepared by <strong>xto100x</strong> &nbsp;·&nbsp; May 2026</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo"><img src="uvie-logo.png" alt="UVIE" /></div>
+  <div class="nav-sep"></div>
+  <button class="nb" onclick="showPage('audit',this)">LinkedIn Audit</button>
+  <button class="nb active" onclick="showPage('compare',this)">Design Comparison</button>
+  <div class="nav-end"><span class="nav-end-dot"></span>Prepared by xto100x</div>
+</nav>
+
+<!-- ══════════════════════════════════
+     AUDIT PAGE
+══════════════════════════════════ -->
+<div id="page-audit" class="page">
+
+  <div class="a-hero">
+    <div class="a-pills">
+      <span class="a-pill">May 8, 2026</span>
+      <span class="a-pill yellow">Prepared by xto100x</span>
+      <span class="a-pill">22 Posts Reviewed</span>
+    </div>
+    <h1>LinkedIn Audit Report<br><span>Ultravibrant Integrated Energy (UVIE)</span></h1>
+    <p class="a-hero-sub">An honest look at what is working, what is broken, and exactly what needs to change for UVIE's LinkedIn to match the scale of the company behind it.</p>
+    <div class="a-stats">
+      <div class="a-stat"><div class="n">9,223</div><div class="l">Followers</div></div>
+      <div class="a-stat"><div class="n">3<em>–</em>5</div><div class="l">Posts per week</div></div>
+      <div class="a-stat"><div class="n">6<em>+</em></div><div class="l">Visual styles in feed</div></div>
+      <div class="a-stat"><div class="n">3</div><div class="l">Logo versions active</div></div>
+    </div>
+  </div>
+
+  <div class="a-body">
+
+    <div class="rainbow-bar"></div>
+
+    <!-- DIAGNOSIS -->
+    <div class="diag">
+      <div class="diag-ico">&#9888;&#65039;</div>
+      <div class="diag-body">
+        <h3>One-Line Diagnosis</h3>
+        <p>UVIE has the posting cadence, the follower base, and the subject matter to be a leading voice in India's renewable energy space. The frequency is there. What is missing is the system behind it — a unified visual identity, a consistent brand voice, and a CTA strategy that turns impressions into conversations.</p>
+        <div class="diag-tags">
+          <span class="diag-tag r">6 visual styles competing</span>
+          <span class="diag-tag r">No caption CTA structure</span>
+          <span class="diag-tag r">3 logos still in use</span>
+          <span class="diag-tag a">Content mix skewed to hiring</span>
+          <span class="diag-tag g">9,223 followers ready to activate</span>
+          <span class="diag-tag g">Strong 3–5 posts/week cadence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHAT'S NOT WORKING -->
+    <div class="sh">
+      <div class="sh-num r">!</div>
+      <div class="sh-text"><h2>What's Not Working</h2><p>Six issues holding the page back from its potential</p></div>
+    </div>
+    <div class="ig">
+
+      <div class="ic full">
+        <div class="ic-top"><div class="ic-ico r">&#127912;</div><h4>No Visual Design System — 6 Styles Running at Once</h4></div>
+        <p>Scroll UVIE's feed and it looks like posts from five different companies. Dark gradient tech, blue wave corporate, raw photo overlays, soft pastel festive templates, and a cinematic Hindi creative with fire effects — none of them connected. The problem is not that any single post looks bad. It is that as a feed, there is no visual thread. A visitor cannot build a brand impression because nothing is consistent enough to hold onto.</p>
+        <div class="fix"><span class="fix-tag">Fix</span><p>One design system: 1 heading font, 1 body font, 3 brand colors, 4 reusable templates covering Education, Hiring, Event, and Employee posts.</p></div>
+      </div>
+
+      <div class="ic">
+        <div class="ic-top"><div class="ic-ico r">&#128506;</div><h4>3 Different Logos Still in Circulation</h4></div>
+        <ul>
+          <li>Current UVIE logo — "Integrated Energy"</li>
+          <li>Older variant — "Infinite Possibilities"</li>
+          <li>Circular ultraVIBRANT legacy burst logo</li>
+        </ul>
+        <p style="margin-top:10px">Three active logos signal a company mid-rebrand that has not finished the job. Every time a different mark appears, it dilutes the brand.</p>
+        <div class="fix"><span class="fix-tag">Fix</span><p>Retire all legacy variants immediately. One logo, everywhere, no exceptions.</p></div>
+      </div>
+
+      <div class="ic">
+        <div class="ic-top"><div class="ic-ico a">&#128278;</div><h4>Banner and About Section are Wasted Space</h4></div>
+        <p>The banner uses a stock dark circuit graphic with no connection to solar work, no CTA, and copy that could describe any tech company. The About section opens with UVIE's naming history instead of what they actually deliver for clients.</p>
+        <div class="fix"><span class="fix-tag">Fix</span><p>Banner: real project photo + "India's Trusted Solar EPC + BESS Partner" + contact CTA. About: open with MW delivered and client outcomes, not company history.</p></div>
+      </div>
+
+      <div class="ic">
+        <div class="ic-top"><div class="ic-ico a">&#9997;&#65039;</div><h4>Captions Have No Hook and No CTA</h4></div>
+        <p>Most captions trail off before the "see more" cut. There is no hook-insight-CTA structure. Most posts end without asking the audience to do anything — no link, no question, no prompt. Brand voice also flips between formal corporate, casual consumer, and Hindi vernacular with no system.</p>
+        <div class="formula-box">
+          <div class="fb-label">Every caption should follow this structure</div>
+          <div class="fb-row"><div class="fb-num">1</div><div class="fb-text"><strong>Hook</strong> — 1 bold line that earns the click to "see more"</div></div>
+          <div class="fb-row"><div class="fb-num">2</div><div class="fb-text"><strong>Context</strong> — 2 lines setting up why this matters</div></div>
+          <div class="fb-row"><div class="fb-num">3</div><div class="fb-text"><strong>Insight</strong> — 2 lines of the actual value or perspective</div></div>
+          <div class="fb-row"><div class="fb-num">4</div><div class="fb-text"><strong>CTA</strong> — 1 direct ask: comment, DM, visit link, or tag someone</div></div>
+          <div class="fb-row"><div class="fb-num">5</div><div class="fb-text"><strong>Hashtags</strong> — 5 fixed: #UVIE #UltravibrantEnergy #SolarEPC #BESS #RenewableIndia</div></div>
+        </div>
+      </div>
+
+      <div class="ic full">
+        <div class="ic-top"><div class="ic-ico r">&#128200;</div><h4>Content Mix is Built for a Job Board, Not a B2B Brand</h4></div>
+        <p style="margin-bottom:18px">Hiring posts (25%) and festive greetings (20%) together account for nearly half of all content. At 9,223 followers, the page has an audience that wants to see UVIE's expertise — what they build, how they think, what they know about India's energy transition. The current mix does not deliver that.</p>
+        <div class="mix">
+          <div class="mix-col">
+            <h4>Current Mix (approximate)</h4>
+            <div class="mi"><span class="mi-lbl">Hiring posts</span><div class="mi-bar"><div class="mi-fill" style="width:100%;background:#d4850a"></div></div><span class="mi-pct">25%</span></div>
+            <div class="mi"><span class="mi-lbl">Festive / holiday</span><div class="mi-bar"><div class="mi-fill" style="width:80%;background:var(--red)"></div></div><span class="mi-pct">20%</span></div>
+            <div class="mi"><span class="mi-lbl">Event announcements</span><div class="mi-bar"><div class="mi-fill" style="width:80%;background:var(--blue)"></div></div><span class="mi-pct">20%</span></div>
+            <div class="mi"><span class="mi-lbl">Educational content</span><div class="mi-bar"><div class="mi-fill" style="width:60%;background:var(--sky)"></div></div><span class="mi-pct">15%</span></div>
+            <div class="mi"><span class="mi-lbl">Employee recognition</span><div class="mi-bar"><div class="mi-fill" style="width:40%;background:var(--green)"></div></div><span class="mi-pct">10%</span></div>
+            <div class="mi"><span class="mi-lbl">Thought leadership</span><div class="mi-bar"><div class="mi-fill" style="width:20%;background:var(--red)"></div></div><span class="mi-pct">5%</span></div>
+          </div>
+          <div class="mix-col">
+            <h4>Recommended Mix</h4>
+            <div class="mi"><span class="mi-lbl">Educational / Thought leadership</span><div class="mi-bar"><div class="mi-fill" style="width:100%;background:var(--green)"></div></div><span class="mi-pct">30%</span></div>
+            <div class="mi"><span class="mi-lbl">Project showcase</span><div class="mi-bar"><div class="mi-fill" style="width:66%;background:var(--navy)"></div></div><span class="mi-pct">20%</span></div>
+            <div class="mi"><span class="mi-lbl">Social proof / Trust</span><div class="mi-bar"><div class="mi-fill" style="width:66%;background:var(--sky)"></div></div><span class="mi-pct">20%</span></div>
+            <div class="mi"><span class="mi-lbl">Company culture / Team</span><div class="mi-bar"><div class="mi-fill" style="width:50%;background:var(--yellow)"></div></div><span class="mi-pct">15%</span></div>
+            <div class="mi"><span class="mi-lbl">Industry news + commentary</span><div class="mi-bar"><div class="mi-fill" style="width:33%;background:var(--sky)"></div></div><span class="mi-pct">10%</span></div>
+            <div class="mi"><span class="mi-lbl">Hiring</span><div class="mi-bar"><div class="mi-fill" style="width:16%;background:var(--red)"></div></div><span class="mi-pct">5%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ic">
+        <div class="ic-top"><div class="ic-ico a">&#128279;</div><h4>Brand Name Mismatch Creates Trust Friction</h4></div>
+        <p>The LinkedIn page promotes UVIE / Ultravibrant Integrated Energy, but every creative points to <strong>vibrantsolar.in</strong>. A new visitor — particularly a procurement decision-maker — has no way to know these are the same company. This creates doubt at exactly the moment they are deciding whether to reach out.</p>
+        <div class="fix"><span class="fix-tag">Fix</span><p>Add one line in the About section: "Solutions delivered under the Vibrant Solar brand — vibrantsolar.in" Or update to a UVIE-branded domain.</p></div>
+      </div>
+
+      <div class="ic">
+        <div class="ic-top"><div class="ic-ico r">&#127909;</div><h4>Video Content is Underperforming</h4></div>
+        <p>The EPC explainer and industrial solar videos are getting <strong>17–18 likes</strong>, well below the page average of ~45. LinkedIn videos autoplay without sound. Without a bold text hook in the caption and a strong first frame that tells the story before play, viewers scroll past before the content lands.</p>
+        <div class="fix"><span class="fix-tag">Fix</span><p>Add subtitles to all videos. Write a 1-line bold hook at the top of every video caption. Design a first frame that communicates the message before the viewer presses play.</p></div>
+      </div>
+
+    </div>
+
+    <!-- WHAT'S WORKING -->
+    <div class="sh">
+      <div class="sh-num g">+</div>
+      <div class="sh-text"><h2>What's Working</h2><p>Keep these, amplify them, build the strategy around them</p></div>
+    </div>
+    <div class="wg">
+      <div class="wc">
+        <div class="wn-wrap"><div class="wn">124</div><span class="wn-lbl">likes</span></div>
+        <h4>MD Award / Leadership Post</h4>
+        <p>Highest-performing post reviewed. Real people, real achievements — the MD recognising excellence publicly. This is the exact content type LinkedIn's algorithm rewards most.</p>
+        <div class="tip">&#8594; Make leadership voice a weekly fixture</div>
+      </div>
+      <div class="wc">
+        <div class="wn-wrap"><div class="wn">76</div><span class="wn-lbl">likes</span></div>
+        <h4>Hiring Posts Drive Reposts</h4>
+        <p>5–6 reposts per hiring post means the audience is actively extending UVIE's reach for free. The format works — the execution just needs a consistent template.</p>
+        <div class="tip">&#8594; Consolidate to one per week, same template</div>
+      </div>
+      <div class="wc">
+        <div class="wn-wrap"><div class="wn">69</div><span class="wn-lbl">likes</span></div>
+        <h4>Employee of the Month Carousel</h4>
+        <p>Personal, shareable, and consistently high-performing. Employees sharing their own recognition extends reach organically — and signals a strong employer brand.</p>
+        <div class="tip">&#8594; Standardise the template, run it every month</div>
+      </div>
+      <div class="wc">
+        <div class="wn-wrap"><div class="wn">49</div><span class="wn-lbl">likes</span></div>
+        <h4>Expo &amp; Event Presence Posts</h4>
+        <p>RenewX Chennai (49 likes) and Global Solar Expo Pune (47 likes) performed well. The audience responds when UVIE is visible in the market and shows up at industry events.</p>
+        <div class="tip">&#8594; Add post-event recaps with real photos and takeaways</div>
+      </div>
+      <div class="wc">
+        <div class="wn-wrap"><div class="wn">3–5</div><span class="wn-lbl">posts/wk</span></div>
+        <h4>Strong Posting Cadence</h4>
+        <p>3–5 posts per week is genuinely good for a B2B company of this size. Most competitors post once a week if that. The discipline is there — now it needs the system behind it.</p>
+        <div class="tip">&#8594; Apply the design system to the same cadence</div>
+      </div>
+      <div class="wc">
+        <div class="wn-wrap"><div class="wn">9.2K</div><span class="wn-lbl">followers</span></div>
+        <h4>Follower Base Ready to Activate</h4>
+        <p>A well-optimised LinkedIn page at 9,223 followers should average 90–270 reactions per post. UVIE is getting 25–50. The audience exists and is large enough. The content upgrade will unlock what's already there.</p>
+        <div class="tip">&#8594; The latent engagement is already there</div>
+      </div>
+    </div>
+
+    <!-- PERFORMANCE TABLE -->
+    <div class="sh" style="margin-bottom:18px">
+      <div class="sh-num b">&#126;</div>
+      <div class="sh-text"><h2>Post Performance Snapshot</h2><p>22 posts reviewed across the last 1–2 months. Benchmarks: High = top 20% of page, Low = bottom 20%.</p></div>
+    </div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr><th>Post</th><th>Format</th><th>Likes</th><th>Reposts</th><th>Signal</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>MD Award / Proud Moment</td><td>Static</td><td><strong>124</strong></td><td>—</td><td class="ph">&#9650; High</td></tr>
+          <tr><td>Hiring — AGM Engineering</td><td>Static</td><td><strong>76</strong></td><td>5</td><td class="ph">&#9650; High</td></tr>
+          <tr><td>Employee of the Month</td><td>Carousel</td><td><strong>69</strong></td><td>4</td><td class="ph">&#9650; High</td></tr>
+          <tr><td>Hiring — Growing Team</td><td>Static</td><td><strong>69</strong></td><td>5</td><td class="ph">&#9650; High</td></tr>
+          <tr><td>We Are Hiring — Engineering Design</td><td>Static</td><td><strong>62</strong></td><td>6</td><td class="ph">&#9650; High</td></tr>
+          <tr><td>RenewX Chennai Expo</td><td>Static</td><td>49</td><td>3</td><td class="pm">&#9654; Mid</td></tr>
+          <tr><td>Global Solar Expo Pune</td><td>Static</td><td>47</td><td>—</td><td class="pm">&#9654; Mid</td></tr>
+          <tr><td>Akshaya Tritiya</td><td>Static</td><td>39</td><td>—</td><td class="pm">&#9654; Mid</td></tr>
+          <tr><td>Rooftop vs Ground Mounted Solar</td><td>Static</td><td>35</td><td>1</td><td class="pm">&#9654; Mid</td></tr>
+          <tr><td>India 3rd Largest Solar Market</td><td>Static</td><td>32</td><td>—</td><td class="pm">&#9654; Mid</td></tr>
+          <tr><td>Myths and Facts — Myth Hatao</td><td>Document</td><td>23</td><td>—</td><td class="pm">&#9654; Mid</td></tr>
+          <tr><td>Solar EPC Explanation</td><td>Video</td><td>18</td><td>2</td><td class="pl">&#9660; Low</td></tr>
+          <tr><td>Industrial Solar Explainer</td><td>Video</td><td>17</td><td>—</td><td class="pl">&#9660; Low</td></tr>
+          <tr><td>Rooftop Solar — Unused Space</td><td>Static</td><td>11</td><td>2</td><td class="pl">&#9660; Low</td></tr>
+          <tr><td>Rising Electricity Costs Poll</td><td>Poll</td><td>7 votes</td><td>—</td><td class="pl">&#9660; Very Low</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ACTION PLAN -->
+    <div class="sh" style="margin-bottom:18px">
+      <div class="sh-num" style="background:#fff3e0;color:#c44a00;font-size:18px;">&#9654;</div>
+      <div class="sh-text"><h2>The xto100x Action Plan</h2><p>Three phases to take UVIE's LinkedIn from inconsistent to industry-leading</p></div>
+    </div>
+    <div class="pg">
+      <div class="pc">
+        <div class="pc-hd p1">Phase 1 — Brand Foundation<br>Week 1–2</div>
+        <div class="pc-body">
+          <div class="pi"><div class="pid" style="background:var(--navy)"></div><p>Redesign banner with real project photography, tagline, and contact CTA</p></div>
+          <div class="pi"><div class="pid" style="background:var(--navy)"></div><p>Create unified brand kit: 1 logo, 3 colors, 2 fonts, and icon set</p></div>
+          <div class="pi"><div class="pid" style="background:var(--navy)"></div><p>Build 4–5 reusable templates: Education, Hiring, EoM, Event, Project Showcase</p></div>
+          <div class="pi"><div class="pid" style="background:var(--navy)"></div><p>Retire all legacy logo versions immediately — no exceptions</p></div>
+          <div class="pi"><div class="pid" style="background:var(--navy)"></div><p>Rewrite About section to lead with MW delivered, not naming history</p></div>
+        </div>
+      </div>
+      <div class="pc">
+        <div class="pc-hd p2">Phase 2 — Content System<br>Week 3–4</div>
+        <div class="pc-body">
+          <div class="pi"><div class="pid" style="background:var(--green)"></div><p>Write 30-day content calendar using the 30/20/20/15/10/5 recommended mix</p></div>
+          <div class="pi"><div class="pid" style="background:var(--green)"></div><p>Apply Hook + Context + Insight + CTA + Hashtags structure to every caption</p></div>
+          <div class="pi"><div class="pid" style="background:var(--green)"></div><p>Fixed hashtag set: #UVIE #UltravibrantEnergy #SolarEPC #BESS #RenewableIndia</p></div>
+          <div class="pi"><div class="pid" style="background:var(--green)"></div><p>Create a pinned post: MD message or a landmark project highlight</p></div>
+          <div class="pi"><div class="pid" style="background:var(--green)"></div><p>Add subtitles and strong first frames to all existing video content</p></div>
+        </div>
+      </div>
+      <div class="pc">
+        <div class="pc-hd p3">Phase 3 — Audience Growth<br>Month 2</div>
+        <div class="pc-body">
+          <div class="pi"><div class="pid" style="background:var(--orange)"></div><p>Launch "Solar Myths Busted" weekly series — consistent template, English</p></div>
+          <div class="pi"><div class="pid" style="background:var(--orange)"></div><p>MD voice series: perspectives on India's energy transition and policy</p></div>
+          <div class="pi"><div class="pid" style="background:var(--orange)"></div><p>"Work We're Proud Of": one real project per week with real MW numbers</p></div>
+          <div class="pi"><div class="pid" style="background:var(--orange)"></div><p>Start client testimonial content: quotes, results, short case studies</p></div>
+          <div class="pi"><div class="pid" style="background:var(--orange)"></div><p>Measure weekly, optimise based on comments — not just likes</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /a-body -->
+</div><!-- /page-audit -->
+
+<!-- ══════════════════════════════════
+     COMPARE PAGE
+══════════════════════════════════ -->
+<div id="page-compare" class="page active">
+
+  <div class="c-hero">
+    <div class="c-eyebrow"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block;flex-shrink:0"></span> Creative Redesign</div>
+    <h1><span class="yellow">xto100x</span> × UVIE — Design Comparison</h1>
+    <p>Original UVIE creatives side-by-side with xto100x redesigns — showing exactly what elevated design does for the brand.</p>
+    <div class="c-pills">
+      <div class="cp yellow">xto100x Redesigns</div>
+      <div class="cp">2 Hiring Posts</div>
+      <div class="cp">2 Expo Posts</div>
+      <div class="cp">Ultra Vibrant Integrated Energy</div>
+    </div>
+  </div>
+
+  <div class="itabs">
+    <button class="itb" onclick="showPane('ov-pane',this)">Overview</button>
+    <button class="itb active" onclick="showPane('h1-pane',this)">Hiring — Post 1</button>
+    <button class="itb" onclick="showPane('h2-pane',this)">Hiring — Post 2</button>
+    <button class="itb" onclick="showPane('e1-pane',this)">Expo — Version 1</button>
+    <button class="itb" onclick="showPane('e2-pane',this)">Expo — Version 2</button>
+  </div>
+
+  <!-- OVERVIEW PANE -->
+  <div id="ov-pane" class="pane">
+    <div class="p-intro"><h2>What xto100x Delivered</h2><p>Same content brief, dramatically elevated execution across all four creatives.</p></div>
+    <div class="ov-stats">
+      <div class="os"><div class="n">4<em>+</em></div><div class="l">Redesigned creatives</div></div>
+      <div class="os"><div class="n">2</div><div class="l">Post categories covered</div></div>
+      <div class="os"><div class="n">100<em>%</em></div><div class="l">On-brand UVIE color fidelity</div></div>
+    </div>
+    <div class="ov-tbl-wrap">
+      <table class="ov-tbl">
+        <thead><tr><th>Design Element</th><th>UVIE Original</th><th>xto100x Redesign</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Layout</strong></td><td><span class="tb">Single-column, dense</span></td><td><span class="ta">Two-column grid, breathable</span></td></tr>
+          <tr><td><strong>Typography</strong></td><td><span class="tb">Multiple weights competing</span></td><td><span class="ta">Clear hierarchy, bold headlines</span></td></tr>
+          <tr><td><strong>Positions List</strong></td><td><span class="tb">Bullet list with icon blobs</span></td><td><span class="ta">Numbered 01–04 cards</span></td></tr>
+          <tr><td><strong>Why Join Section</strong></td><td><span class="tb">Buried below positions list</span></td><td><span class="ta">Co-equal right column with icons</span></td></tr>
+          <tr><td><strong>CTA</strong></td><td><span class="tb">Small corner box, low contrast</span></td><td><span class="ta">Full-width footer bar, unmissable</span></td></tr>
+          <tr><td><strong>Expert Profile (Expo)</strong></td><td><span class="tb">Floating photo with label below</span></td><td><span class="ta">"Meet Our Expert" card, structured</span></td></tr>
+          <tr><td><strong>Event Details</strong></td><td><span class="tb">Plain text, low contrast</span></td><td><span class="ta">Icon-paired date and venue</span></td></tr>
+          <tr><td><strong>Co-branding (Expo)</strong></td><td><span class="tb">EQ17 logo competing with UVIE</span></td><td><span class="ta">UVIE identity primary, uncompeted</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- HIRING POST 1 -->
+  <div id="h1-pane" class="pane active">
+    <div class="p-intro">
+      <h2>Hiring Post — Original vs xto100x Redesign 1</h2>
+      <p>Two-column grid with real solar imagery, numbered position cards, and a full-width Apply Now footer.</p>
+    </div>
+    <div class="cc">
+      <div class="cc-hd">
+        <div class="cc-num">1</div>
+        <div class="cc-hd-text">
+          <h3>We're Hiring — Engineering Design Roles</h3>
+          <p>Dept: Engineering Design &nbsp;·&nbsp; Jaipur &nbsp;·&nbsp; Onsite / Hybrid &nbsp;·&nbsp; B.Tech Electrical / Civil</p>
+        </div>
+      </div>
+      <div class="cc-grid">
+        <div class="cc-orig">
+          <div class="lbl-orig"><span class="lbl-dot"></span>UVIE Original</div>
+          <img class="img-orig" src="uvie-hiring-original.jpg" alt="UVIE Hiring Original" />
+        </div>
+        <div class="cc-ours">
+          <div class="badge-row"><div class="lbl-ours"><span class="lbl-dot"></span>xto100x Redesign 1</div><span class="our-star">Our Work</span></div>
+          <img class="img-ours" src="xto-hiring-1.png" alt="xto100x Hiring Redesign 1" />
+        </div>
+      </div>
+      <div class="diff-bar">
+        <h4>What xto100x Improved</h4>
+        <div class="dg">
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Real solar imagery</strong><span>Solar panels and infrastructure replace the stock man in a suit, anchoring the design to UVIE's actual business.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Two-column layout</strong><span>Positions and Why Join placed side by side, eliminating density and making the post scannable in one glance.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Numbered position cards</strong><span>Clean 01–04 system replaces floating icon blobs, creating a natural reading order down the post.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Full-width Apply Now footer</strong><span>CTA moved from a cramped bottom corner to a bold dark footer stripe with email and phone visible at a glance.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIRING POST 2 -->
+  <div id="h2-pane" class="pane">
+    <div class="p-intro">
+      <h2>Hiring Post — Original vs xto100x Redesign 2</h2>
+      <p>Stronger headline hierarchy, "Career Opportunity" context label, Why Join elevated to equal standing.</p>
+    </div>
+    <div class="cc">
+      <div class="cc-hd">
+        <div class="cc-num">2</div>
+        <div class="cc-hd-text">
+          <h3>We're Hiring — Engineering Design Roles (Alt. Layout)</h3>
+          <p>Second xto100x take — bolder structure, refined visual balance, cleaner background</p>
+        </div>
+      </div>
+      <div class="cc-grid">
+        <div class="cc-orig">
+          <div class="lbl-orig"><span class="lbl-dot"></span>UVIE Original</div>
+          <img class="img-orig" src="uvie-hiring-original.jpg" alt="UVIE Hiring Original" />
+        </div>
+        <div class="cc-ours">
+          <div class="badge-row"><div class="lbl-ours"><span class="lbl-dot"></span>xto100x Redesign 2</div><span class="our-star">Our Work</span></div>
+          <img class="img-ours" src="xto-hiring-2.png" alt="xto100x Hiring Redesign 2" />
+        </div>
+      </div>
+      <div class="diff-bar">
+        <h4>What xto100x Improved</h4>
+        <div class="dg">
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>"Career Opportunity" label</strong><span>Tells the reader what they are looking at before they process the headline — removes ambiguity instantly.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Why Join as its own column</strong><span>No longer buried at the bottom. Given equal visual weight alongside the positions list so candidates see both together.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Infrastructure background</strong><span>Solar panels and power lines instead of a stock model — the design connects to UVIE's real project work.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Full brand name in footer</strong><span>"Ultra Vibrant Integrated Energy Ltd." reinforces the full company identity at the close, not just the logo mark.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPO V1 -->
+  <div id="e1-pane" class="pane">
+    <div class="p-intro">
+      <h2>Expo Post — Original vs xto100x Version 1</h2>
+      <p>EQ17 co-branding removed, expert profile structured as "Meet Our Expert", event details clarified with icons.</p>
+    </div>
+    <div class="cc">
+      <div class="cc-hd">
+        <div class="cc-num">3</div>
+        <div class="cc-hd-text">
+          <h3>Global Solar Expo 2026 — Let's Connect</h3>
+          <p>17–18 April 2026 &nbsp;·&nbsp; Auto Cluster Exhibition Centre, Pune &nbsp;·&nbsp; Mr. Krishn Gopal Ratawa, GM Pvt. Sales</p>
+        </div>
+      </div>
+      <div class="cc-grid">
+        <div class="cc-orig">
+          <div class="lbl-orig"><span class="lbl-dot"></span>UVIE Original</div>
+          <img class="img-orig" src="uvie-expo-original.jpg" alt="UVIE Expo Original" />
+        </div>
+        <div class="cc-ours">
+          <div class="badge-row"><div class="lbl-ours"><span class="lbl-dot"></span>xto100x Version 1</div><span class="our-star">Our Work</span></div>
+          <img class="img-ours" src="xto-expo-1.png" alt="xto100x Expo Version 1" />
+        </div>
+      </div>
+      <div class="diff-bar">
+        <h4>What xto100x Improved</h4>
+        <div class="dg">
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>EQ17 co-branding removed</strong><span>The competing expo logo is gone. UVIE's identity is now the sole focal point — no visual confusion.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>"Meet Our Expert" framing</strong><span>Elevates Krishn Gopal Ratawa with a proper structured introduction rather than a floating photo and plain label.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Icon-paired event details</strong><span>Calendar and pin icons make date and venue scannable in 2 seconds instead of reading through a text block.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Brand tagline added</strong><span>"Let's power a sustainable tomorrow" gives the expo presence a clear purpose beyond just announcing attendance.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPO V2 -->
+  <div id="e2-pane" class="pane">
+    <div class="p-intro">
+      <h2>Expo Post — Original vs xto100x Version 2</h2>
+      <p>Bold diagonal split layout, fully designed expert card, brand values footer strip across the bottom.</p>
+    </div>
+    <div class="cc">
+      <div class="cc-hd">
+        <div class="cc-num">4</div>
+        <div class="cc-hd-text">
+          <h3>Global Solar Expo 2026 — Connect Now</h3>
+          <p>Alternate layout — diagonal split composition with expert profile card and brand values footer</p>
+        </div>
+      </div>
+      <div class="cc-grid">
+        <div class="cc-orig">
+          <div class="lbl-orig"><span class="lbl-dot"></span>UVIE Original</div>
+          <img class="img-orig" src="uvie-expo-original.jpg" alt="UVIE Expo Original" />
+        </div>
+        <div class="cc-ours">
+          <div class="badge-row"><div class="lbl-ours"><span class="lbl-dot"></span>xto100x Version 2</div><span class="our-star">Our Work</span></div>
+          <img class="img-ours" src="xto-expo-2.png" alt="xto100x Expo Version 2" />
+        </div>
+      </div>
+      <div class="diff-bar">
+        <h4>What xto100x Improved</h4>
+        <div class="dg">
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Bold diagonal composition</strong><span>Diagonal geometry creates visual energy and a clear reading path — headline to expert card to CTA in one flow.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Fully designed expert card</strong><span>Navy card with circular photo, name, title, and "Connect Now" CTA together as one complete block — not just a label.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Orange accent used deliberately</strong><span>A single headline underline in UVIE orange draws the eye without overwhelming the navy-sky-white palette.</span></div></div>
+          <div class="di"><div class="di-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><strong>Brand values footer strip</strong><span>Integrated · Innovative · Sustainable · Reliable turns the bottom strip into a positioning statement, not dead space.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-compare -->
+
+<footer>
+  Prepared by <strong>xto100x</strong> for Ultra Vibrant Integrated Energy (UVIE) &nbsp;·&nbsp; LinkedIn Audit + Design Comparison &nbsp;·&nbsp; May 2026
+</footer>
+
+<script>
+  setTimeout(() => document.getElementById('intro').classList.add('out'), 3300);
+
+  function showPage(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function showPane(id, btn) {
+    document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.itb').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
